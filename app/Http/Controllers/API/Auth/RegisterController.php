@@ -12,6 +12,9 @@ use App\Http\Resources\Auth\AuthResource;
 
 use Illuminate\Support\Facades\Validator;
 
+// Enums
+use App\Enums\StatusAPI;
+
 class RegisterController extends Controller
 {
     /**
@@ -29,7 +32,7 @@ class RegisterController extends Controller
         // Check if validation fails
         if ($validator->fails()) {
             // Return validation errors in a structured format
-            return new AuthResource(false, 400, 'Validation failed', $validator->errors());
+            return new AuthResource(StatusAPI::ERROR, 400, 'Validation failed!', $validator->errors());
         }
 
         try {
@@ -41,11 +44,11 @@ class RegisterController extends Controller
             ]);
     
             // Return a successful response
-            return new AuthResource(true, 200, 'Auth Login', $user);
+            return new AuthResource(StatusAPI::SUCCESS, 200, 'Register Successfully', $user);
     
         } catch (\Exception $e) {
             // Handle any other unexpected errors
-            return new AuthResource(false, 500, 'Error creating user', null, $e->getMessage());
+            return new AuthResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error', null, $e->getMessage());
         }
     }
 }

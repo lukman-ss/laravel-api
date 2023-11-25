@@ -39,10 +39,14 @@ class AuthResource extends JsonResource
     public function toArray($request) : array
     {
         return [
-            'success'   => $this->status,
-            'code'   => $this->code,
+            'status'   => $this->status,
+            // 'code'   => $this->code,
             'message'   => $this->message,
             'data'      => $this->resource
         ];
+    }
+    public function withResponse($request, $response)
+    {
+        $response->setStatusCode($this->code);
     }
 }
