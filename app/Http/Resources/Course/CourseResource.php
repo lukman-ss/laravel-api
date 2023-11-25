@@ -9,6 +9,7 @@ class CourseResource extends JsonResource
 {
     //define properti
     public $status;
+    public $code;
     public $message;
     public $resource;
     
@@ -16,14 +17,16 @@ class CourseResource extends JsonResource
      * __construct
      *
      * @param  mixed $status
+     * @param  mixed $code
      * @param  mixed $message
      * @param  mixed $resource
      * @return void
      */
-    public function __construct($status, $message, $resource)
+    public function __construct($status, $code, $message, $resource)
     {
         parent::__construct($resource);
         $this->status  = $status;
+        $this->code = $code;
         $this->message = $message;
     }
 
@@ -36,9 +39,14 @@ class CourseResource extends JsonResource
     public function toArray($request) : array
     {
         return [
-            'success'   => $this->status,
+            'status'   => $this->status,
+            // 'code'   => $this->code,
             'message'   => $this->message,
             'data'      => $this->resource
         ];
+    }
+    public function withResponse($request, $response)
+    {
+        $response->setStatusCode($this->code);
     }
 }

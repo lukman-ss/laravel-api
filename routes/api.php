@@ -13,14 +13,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('auth/login', [App\Http\Controllers\API\Auth\LoginController::class, '__invoke']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::prefix('auth')->group(function () {
-    Route::post('/login', [App\Http\Controllers\API\Auth\LoginController::class, '__invoke']);
-    Route::post('/register', [App\Http\Controllers\API\Auth\RegisterController::class, '__invoke']);
-    // Route::post('/login', [AuthController::class, 'login']);
-    Route::middleware('auth:sanctum')->post('/logout', [App\Http\Controllers\API\Auth\LogoutController::class, '__invoke']);
-    // Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
+Route::middleware('auth:sanctum')->group(function() {
+
+    Route::prefix('auth')->group(function () {
+        Route::post('/register', [App\Http\Controllers\API\Auth\RegisterController::class, '__invoke']);
+        Route::post('/logout', [App\Http\Controllers\API\Auth\LogoutController::class, '__invoke']);
+    });
+
+    Route::prefix('course')->group(function () {
+        Route::get('/list', [App\Http\Controllers\API\Course\ListCourseController::class, '__invoke']);
+        // Route::post('/logout', [App\Http\Controllers\API\Auth\LogoutController::class, '__invoke']);
+    });
 });

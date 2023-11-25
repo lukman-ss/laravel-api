@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class CourseModel extends Model
 {
     use HasFactory;
+
+    protected $table = 'course';
     /***
      ** Fillable field
      */
