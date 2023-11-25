@@ -9,6 +9,7 @@ class AuthResource extends JsonResource
 {
     //define properti
     public $status;
+    public $code;
     public $message;
     public $resource;
     
@@ -16,14 +17,16 @@ class AuthResource extends JsonResource
      * __construct
      *
      * @param  mixed $status
+     * @param  mixed $code
      * @param  mixed $message
      * @param  mixed $resource
      * @return void
      */
-    public function __construct($status, $message, $resource)
+    public function __construct($status, $code, $message, $resource)
     {
         parent::__construct($resource);
         $this->status  = $status;
+        $this->code = $code;
         $this->message = $message;
     }
 
@@ -37,6 +40,7 @@ class AuthResource extends JsonResource
     {
         return [
             'success'   => $this->status,
+            'code'   => $this->code,
             'message'   => $this->message,
             'data'      => $this->resource
         ];
