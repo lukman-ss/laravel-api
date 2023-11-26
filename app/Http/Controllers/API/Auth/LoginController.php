@@ -46,7 +46,7 @@ class LoginController extends Controller
     
         } catch (\Exception $e) {
             // Handle any other unexpected errors
-            return new AuthResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error', null, $e->getMessage());
+            return new AuthResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error',  $e->getMessage());
         }
 
 

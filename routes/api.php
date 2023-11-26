@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::prefix('course')->group(function () {
         Route::get('/list', [App\Http\Controllers\API\Course\ListCourseController::class, '__invoke']);
+        Route::post('/create', [App\Http\Controllers\API\Course\CreateCourseController::class, '__invoke']);
         // Route::post('/logout', [App\Http\Controllers\API\Auth\LogoutController::class, '__invoke']);
     });
 });

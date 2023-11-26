@@ -20,7 +20,7 @@ class LogoutController extends Controller
             return new AuthResource(StatusAPI::SUCCESS, 200, 'Logout Successfully', []);
         } catch (\Exception $e) {
             // Handle any other unexpected errors
-            return new AuthResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error', null, $e->getMessage());
+            return new AuthResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error',  $e->getMessage());
         }
     }
 }

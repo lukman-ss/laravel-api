@@ -19,6 +19,8 @@ class CourseModel extends Model
         'description',
         'status',
         'created_by',
+        'image',
+        'updated_at',
     ];
     /**
      * image

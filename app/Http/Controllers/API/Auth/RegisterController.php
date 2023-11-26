@@ -31,7 +31,7 @@ class RegisterController extends Controller
         // Check if validation fails
         if ($validator->fails()) {
             // Return validation errors in a structured format
-            return new AuthResource(StatusAPI::ERROR, 400, 'Validation failed!', $validator->errors());
+            return new AuthResource(StatusAPI::ERROR, 422, 'Validation failed!', $validator->errors());
         }
 
         try {
@@ -47,7 +47,7 @@ class RegisterController extends Controller
     
         } catch (\Exception $e) {
             // Handle any other unexpected errors
-            return new AuthResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error', null, $e->getMessage());
+            return new AuthResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error', $e->getMessage());
         }
     }
 }

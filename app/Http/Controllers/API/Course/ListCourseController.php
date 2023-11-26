@@ -23,7 +23,7 @@ class ListCourseController extends Controller
         try {
             return new CourseResource(StatusAPI::SUCCESS, 200, 'List Data Course', CourseModel::latest()->paginate(10));
         } catch (\Exception $e) {
-            return new AuthResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error', null, $e->getMessage());
+            return new CourseResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error', null, $e->getMessage());
         }
         
     }
