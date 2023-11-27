@@ -25,5 +25,6 @@ class ListUserController extends Controller
         } catch (\Exception $e) {
             return new MainResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error', $e->getMessage());
         }
+        
     }
 }
