@@ -11,6 +11,7 @@ class CourseModel extends Model
     use HasFactory;
 
     protected $table = 'course';
+    protected $primaryKey = 'id';
     /***
      ** Fillable field
      */
