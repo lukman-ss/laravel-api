@@ -1,45 +1,44 @@
 <?php
 
-namespace App\Http\Controllers\API\Course;
+namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Validator;
-
-// model
-use App\Models\Course\CourseModel;
-
-// resource
-use App\Http\Resources\Course\CourseResource;
-
-// enum
-use App\Enums\StatusAPI;
-
 // storage
 use Illuminate\Support\Facades\Storage;
-class UpdateCourseController extends Controller
+
+// Validator
+use Illuminate\Support\Facades\Validator;
+
+// user model
+use App\Models\User;
+
+// resource main
+use App\Http\Resources\Main\MainResource;
+
+use App\Enums\StatusAPI;
+class UpdateUserController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, CourseModel $course, $id)
+    public function __invoke(Request $request, User $user, $id)
     {
-        //define validation rules
-        $validator = Validator::make($request->all(), [
+         //define validation rules
+         $validator = Validator::make($request->all(), [
             'name'          => 'required',
             'description'   => 'required',
         ]);
         //check if validation fails
         if ($validator->fails()) {
-            return new CourseResource(StatusAPI::ERROR, 422, 'Validation failed!', $validator->errors());
+            return new MainResource(StatusAPI::ERROR, 422, 'Validation failed!', $validator->errors());
         }
 
         $course = CourseModel::find($id);
 
         if(!$course)
         {
-            return new CourseResource(StatusAPI::NOT_FOUND, 404, 'NOT FOUND', ['error' => 'ID NOT FOUND']);
+            return new MainResource(StatusAPI::NOT_FOUND, 404, 'NOT FOUND', ['error' => 'ID NOT FOUND']);
 
         }
         try {
@@ -58,17 +57,17 @@ class UpdateCourseController extends Controller
                     'image' =>  $image->hashName(),
                 ]);
 
-                return new CourseResource(StatusAPI::SUCCESS, 200, 'Update Data Course & Image', $course);
+                return new MainResource(StatusAPI::SUCCESS, 200, 'Update Data Course & Image', $course);
             } else {
                 $course->update([
                     'name' => $request->name,
                     'description' => $request->description,
                 ]);
 
-                return new CourseResource(StatusAPI::SUCCESS, 200, 'Update Data Course', $course);
+                return new MainResource(StatusAPI::SUCCESS, 200, 'Update Data Course', $course);
             }
         } catch (\Throwable $th) {
-            return new CourseResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error',$th->getMessage());
+            return new MainResource(StatusAPI::SERVER_ERROR, 500, 'Internal Server Error',$th->getMessage());
         }
     }
 }
