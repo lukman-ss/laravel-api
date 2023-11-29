@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\CourseScheduled;
+namespace App\Models\Course;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
