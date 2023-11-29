@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_registration_models', function (Blueprint $table) {
+        Schema::create('course_registration', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('secret_key_id')->constrained('course_secret_key')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
