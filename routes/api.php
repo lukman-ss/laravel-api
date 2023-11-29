@@ -15,14 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('auth/login', [App\Http\Controllers\API\Auth\LoginController::class, '__invoke']);
 
+Route::post('auth/register', [App\Http\Controllers\API\Auth\RegisterController::class, '__invoke']);
 Route::middleware('auth:sanctum')->group(function() {
 
     Route::prefix('auth')->group(function () {
-        Route::post('/register', [App\Http\Controllers\API\Auth\RegisterController::class, '__invoke']);
         Route::post('/logout', [App\Http\Controllers\API\Auth\LogoutController::class, '__invoke']);
     });
+
     Route::prefix('user')->group(function () {
         Route::get('/list', [App\Http\Controllers\API\User\ListUserController::class, '__invoke']);
+        Route::post('/assign', [App\Http\Controllers\API\User\AssignRoleUserController::class, '__invoke']);
     });
 
     Route::prefix('course')->group(function () {

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('description');
             $table->boolean('status')->default(null);
             $table->string('created_by');
-            $table->string('image');
             $table->timestamps(); 
         });
     }
