@@ -24,15 +24,18 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::prefix('user')->group(function () {
         Route::get('/list', [App\Http\Controllers\API\User\ListUserController::class, '__invoke']);
-        Route::post('/assign', [App\Http\Controllers\API\User\AssignRoleUserController::class, '__invoke']);
+        Route::middleware(['role:admin|super_admin'])->post('/assign', [App\Http\Controllers\API\User\AssignRoleUserController::class, '__invoke']);
     });
 
     Route::prefix('course')->group(function () {
+
+        Route::group(['middleware' => ['role:admin']], function () {
+            Route::post('/create', [App\Http\Controllers\API\Course\CreateCourseController::class, '__invoke']);
+            Route::delete('/delete/{id}', [App\Http\Controllers\API\Course\DeleteCourseController::class, '__invoke']);
+            Route::post('/update/{id}', [App\Http\Controllers\API\Course\UpdateCourseController::class, '__invoke']);
+        });
+
         Route::get('/list', [App\Http\Controllers\API\Course\ListCourseController::class, '__invoke']);
-        Route::post('/create', [App\Http\Controllers\API\Course\CreateCourseController::class, '__invoke']);
         Route::get('/detail/{id}', [App\Http\Controllers\API\Course\DetailCourseController::class, 'show']);
-        Route::delete('/delete/{id}', [App\Http\Controllers\API\Course\DeleteCourseController::class, '__invoke']);
-        Route::post('/update/{id}', [App\Http\Controllers\API\Course\UpdateCourseController::class, '__invoke']);
-        // Route::post('/logout', [App\Http\Controllers\API\Auth\LogoutController::class, '__invoke']);
     });
 });

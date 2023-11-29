@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Enums\StatusAPI;
+use App\Http\Resources\Main\MainResource;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -19,12 +21,25 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Register the exception handling callbacks for the application.
+     * Old Register the exception handling callbacks for the application.
      */
-    public function register(): void
+    // public function register(): void
+    // {
+    //     $this->reportable(function (Throwable $e) {
+    //         //
+    //     });
+    // }
+    /**
+     * spatie exception handling callbacks for the application.
+     */
+    public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
+            return new MainResource(StatusAPI::ERROR, 403, 'You do not have the required authorization.',[]);
+            // return response()->json([
+            //     'responseMessage' => 'You do not have the required authorization.',
+            //     'responseStatus'  => 403,
+            // ]);
         });
     }
 }

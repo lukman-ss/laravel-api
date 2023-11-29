@@ -41,7 +41,7 @@ class RegisterController extends Controller
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
             ]);
-    
+            $user->assignRole('guest');
             // Return a successful response
             return new AuthResource(StatusAPI::SUCCESS, 200, 'Register Successfully', $user);
     

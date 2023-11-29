@@ -26,6 +26,8 @@ class AssignRoleUserController extends Controller
         }
         try {
             $user = $user::findOrFail($request->user_id);
+            // Remove all existing roles
+            $user->roles()->detach();
             $user->assignRole($request->role_name);
             return new MainResource(StatusAPI::SUCCESS, 200, 'Register Successfully', $user);
         } catch (\Exception $e) {
